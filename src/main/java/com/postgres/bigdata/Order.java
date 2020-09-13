@@ -1,0 +1,18 @@
+package com.postgres.bigdata;
+
+import java.math.BigDecimal;
+import java.time.OffsetDateTime;
+import lombok.Builder;
+import lombok.Value;
+
+@Builder
+@Value
+public class Order {
+
+  String orderId;
+  OffsetDateTime creationDate;
+  String customerName;
+  BigDecimal orderTotal;
+  String membershipLevel;
+
+}
