@@ -33,4 +33,9 @@ class ApplicationConfiguration {
   PostgresOrderRepository postgreOrderRepository() {
     return new PostgresOrderRepository(dataSource());
   }
+
+  @Bean
+  PostgresBigOrderRepository postgresBigOrderRepository() {
+    return new PostgresBigOrderRepository(dataSource());
+  }
 }
