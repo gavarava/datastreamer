@@ -9,7 +9,7 @@ import lombok.Value;
 @Value
 public class Order {
 
-  String orderId;
+  String id;
   OffsetDateTime creationDate;
   String customerName;
   BigDecimal orderTotal;

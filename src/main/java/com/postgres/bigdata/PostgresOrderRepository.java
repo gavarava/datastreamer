@@ -34,7 +34,7 @@ public class PostgresOrderRepository implements OrderRepository {
     String SQL = "select * from public.order where id = ?";
     jdbcTemplateObject.query(SQL, resultSet -> {
       return new Order.OrderBuilder()
-          .orderId(resultSet.getString("id"))
+          .id(resultSet.getString("id"))
           .creationDate(ofInstant(ofEpochMilli(resultSet.getTimestamp("creationDate").getTime()),
               UTC))
           .customerName(resultSet.getString("customerName"))
@@ -51,7 +51,7 @@ public class PostgresOrderRepository implements OrderRepository {
     List<Order> orders = new ArrayList<>();
     jdbcTemplateObject.query(SQL, resultSet -> {
       Order order = new Order.OrderBuilder()
-          .orderId(resultSet.getString("id"))
+          .id(resultSet.getString("id"))
           .creationDate(ofInstant(ofEpochMilli(resultSet.getTimestamp("creationDate").getTime()),
               UTC))
           .customerName(resultSet.getString("customerName"))
