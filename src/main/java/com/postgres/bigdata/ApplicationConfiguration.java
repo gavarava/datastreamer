@@ -1,7 +1,9 @@
 package com.postgres.bigdata;
 
+import javax.persistence.EntityManager;
 import javax.sql.DataSource;
 import org.postgresql.Driver;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
@@ -35,7 +37,7 @@ class ApplicationConfiguration {
   }
 
   @Bean
-  PostgresBigOrderRepository postgresBigOrderRepository() {
-    return new PostgresBigOrderRepository(dataSource());
+  PostgresBigOrderRepository postgresBigOrderRepository(@Autowired EntityManager entityManager) {
+    return new PostgresBigOrderRepository(OrderEntity.class, entityManager);
   }
 }
