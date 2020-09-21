@@ -23,34 +23,17 @@ class PostgresBigOrderRepositoryIT {
   @Autowired
   private PostgresBigOrderRepository postgresBigOrderRepository;
 
-  @Test
-  void findAll() {
-  }
-
   @Transactional
   @Test
-  void testFindAll() {
+  void testFindAll_whenNotUsingPagination_andLoadingAllResultSetInMemory() {
     Specification<OrderEntity> orderSpecification = OrderSpecification
         .orderTotalLessThan(BigDecimal.valueOf(400));
 
     List<OrderEntity> result = postgresBigOrderRepository
         .stream(orderSpecification, OrderEntity.class)
-        .filter(orderEntity -> orderEntity.getOrdertotal().compareTo(BigDecimal.valueOf(300)) == -1)
         .collect(Collectors.toList());
-    System.out.println(result);
-  }
-
-  @Test
-  void shouldReturnPagesOfLargeDataSet() {
-
-    Pageable paging = PageRequest.of(0, 400);
-    Page<OrderEntity> orderEntities = postgresBigOrderRepository.findAll(paging);
-    List<String> customerNames = orderEntities.stream()
-        .map(orderEntity -> orderEntity.getCustomername())
-        .collect(Collectors.toList());
-
-    assertThat(customerNames.size(), is(400));
-    // System.out.println(customerNames);
+    System.out.println("Total Elements = " + result.size());
+    assertThat(result.size(), is(400252));
   }
 
   @Test
@@ -58,39 +41,23 @@ class PostgresBigOrderRepositoryIT {
     Specification<OrderEntity> orderSpecification = OrderSpecification
         .orderTotalLessThan(BigDecimal.valueOf(400));
 
-    int maxPages = Integer.MAX_VALUE;
+    Pageable paging = PageRequest.of(0, 20000);
+    Page<OrderEntity> orderEntities = postgresBigOrderRepository
+        .findAll(orderSpecification, paging);
+    System.out.println("Total Elements = " + orderEntities.getTotalElements());
+    assertThat(orderEntities.getTotalElements(), is(400252));
+    System.out.println("Total Pages = " + orderEntities.getTotalPages());
+    System.out.println("Number = " + orderEntities.getNumber());
+    System.out.println("Order totals of this batch = " + orderEntities.stream()
+        .mapToDouble(value -> value.getOrdertotal().doubleValue()).sum());
 
-    for (int i = 0; i < maxPages; i++) {
-
+    for (int i = 1; i < orderEntities.getTotalPages(); i++) {
+      orderEntities = postgresBigOrderRepository
+          .findAll(orderSpecification, orderEntities.nextPageable());
+      System.out.println("Page Number = " + orderEntities.getNumber());
+      System.out.println("Elements in this page = " + orderEntities.getNumberOfElements());
+      System.out.println("Order totals of this batch = " + orderEntities.stream()
+          .mapToDouble(value -> value.getOrdertotal().doubleValue()).sum());
     }
-
-    Pageable paging = PageRequest.of(0, 1000);
-    Page<OrderEntity> orderEntities = postgresBigOrderRepository
-        .findAll(orderSpecification, paging);
-    List<BigDecimal> orderTotals = orderEntities.stream()
-        .map(orderEntity -> orderEntity.getOrdertotal())
-        .collect(Collectors.toList());
-
-    System.out.println(orderTotals.get(0));
-    System.out.println(orderTotals.get(orderTotals.size() - 1));
-    assertThat(orderTotals.size(), is(1000));
   }
-
-
-  @Test
-  void shouldReturnPageOfData_whenAskingForOrderTotalsLessThan_400() {
-    Specification<OrderEntity> orderSpecification = OrderSpecification
-        .orderTotalLessThan(BigDecimal.valueOf(400));
-    Pageable paging = PageRequest.of(0, 1000);
-    Page<OrderEntity> orderEntities = postgresBigOrderRepository
-        .findAll(orderSpecification, paging);
-    List<BigDecimal> orderTotals = orderEntities.stream()
-        .map(orderEntity -> orderEntity.getOrdertotal())
-        .collect(Collectors.toList());
-
-    System.out.println(orderTotals.get(0));
-    System.out.println(orderTotals.get(orderTotals.size() - 1));
-    assertThat(orderTotals.size(), is(1000));
-  }
-
 }
