@@ -19,4 +19,4 @@ select current_timestamp,
        md5(random()::text),
        1000 * random()::numeric(10, 3),
        'Standard'
-from generate_series(1, 1000000) s(i);
+from generate_series(1, 10000000) s(i);

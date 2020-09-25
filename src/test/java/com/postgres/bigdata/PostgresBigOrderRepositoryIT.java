@@ -33,7 +33,11 @@ class PostgresBigOrderRepositoryIT {
         .stream(orderSpecification, OrderEntity.class)
         .collect(Collectors.toList());
     System.out.println("Total Elements = " + result.size());
-    assertThat(result.size(), is(400252));
+    assertThat(result.size(), is(399260));
+
+    double batchOrderTotal = result.stream()
+        .mapToDouble(value -> value.getOrdertotal().doubleValue()).sum();
+    System.out.println("Order totals of this batch = " + batchOrderTotal);
   }
 
   @Test
@@ -44,20 +48,30 @@ class PostgresBigOrderRepositoryIT {
     Pageable paging = PageRequest.of(0, 20000);
     Page<OrderEntity> orderEntities = postgresBigOrderRepository
         .findAll(orderSpecification, paging);
+
     System.out.println("Total Elements = " + orderEntities.getTotalElements());
-    assertThat(orderEntities.getTotalElements(), is(400252));
+    assertThat(orderEntities.getTotalElements(), is(399260L));
+
     System.out.println("Total Pages = " + orderEntities.getTotalPages());
     System.out.println("Number = " + orderEntities.getNumber());
-    System.out.println("Order totals of this batch = " + orderEntities.stream()
-        .mapToDouble(value -> value.getOrdertotal().doubleValue()).sum());
+
+    double batchOrderTotal = orderEntities.stream()
+        .mapToDouble(value -> value.getOrdertotal().doubleValue()).sum();
+    System.out.println("Order totals of this batch = " + batchOrderTotal);
+
+
 
     for (int i = 1; i < orderEntities.getTotalPages(); i++) {
       orderEntities = postgresBigOrderRepository
           .findAll(orderSpecification, orderEntities.nextPageable());
       System.out.println("Page Number = " + orderEntities.getNumber());
       System.out.println("Elements in this page = " + orderEntities.getNumberOfElements());
-      System.out.println("Order totals of this batch = " + orderEntities.stream()
-          .mapToDouble(value -> value.getOrdertotal().doubleValue()).sum());
+
+      batchOrderTotal += orderEntities.stream()
+          .mapToDouble(value -> value.getOrdertotal().doubleValue()).sum();
+      System.out.println("Order totals of this batch = " + batchOrderTotal);
     }
+
+    System.out.println("Final batchOrderTotal = " +  batchOrderTotal);
   }
 }
