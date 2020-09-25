@@ -7,13 +7,13 @@
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
     <version>2.3.2.RELEASE</version>
-    <relativePath/> <!-- lookup parent from repository -->
+    <relativePath/>
   </parent>
-  <groupId>com.postgres.bigdata</groupId>
+  <groupId>io.datastreamer</groupId>
   <artifactId>postgres-big-db</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>0.0.2-SNAPSHOT</version>
   <name>demo</name>
-  <description>Big Data Experimentation Postgres</description>
+  <description>Big Data Stream Generator in Spring Boot</description>
   <properties>
     <java.version>11</java.version>
   </properties>

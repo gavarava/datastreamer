@@ -1,4 +1,4 @@
-package com.postgres.bigdata;
+package io.datastreamer;
 
 import java.math.BigDecimal;
 import org.springframework.data.jpa.domain.Specification;

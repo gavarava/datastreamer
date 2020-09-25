@@ -1,4 +1,4 @@
-package com.postgres.bigdata;
+package io.datastreamer;
 
 import static java.time.Instant.ofEpochMilli;
 import static java.time.OffsetDateTime.ofInstant;

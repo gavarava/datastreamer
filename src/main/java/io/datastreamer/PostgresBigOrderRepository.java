@@ -1,4 +1,4 @@
-package com.postgres.bigdata;
+package io.datastreamer;
 
 import static org.hibernate.jpa.QueryHints.HINT_FETCH_SIZE;
 

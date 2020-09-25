@@ -1,4 +1,4 @@
-package com.postgres.bigdata;
+package io.datastreamer;
 
 import javax.persistence.EntityManager;
 import javax.sql.DataSource;

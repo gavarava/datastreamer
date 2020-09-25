@@ -1,4 +1,4 @@
-package com.postgres.bigdata;
+package io.datastreamer;
 
 import org.springframework.data.jpa.domain.Specification;
 
