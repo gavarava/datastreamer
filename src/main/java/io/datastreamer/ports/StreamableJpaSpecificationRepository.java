@@ -1,8 +1,7 @@
-package io.datastreamer;
-
-import org.springframework.data.jpa.domain.Specification;
+package io.datastreamer.ports;
 
 import java.util.stream.Stream;
+import org.springframework.data.jpa.domain.Specification;
 
 /**
  * From https://github.com/verzac/demo-spring-data-jpa-stream-and-spec

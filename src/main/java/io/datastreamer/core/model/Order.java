@@ -1,4 +1,4 @@
-package io.datastreamer;
+package io.datastreamer.core.model;
 
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;

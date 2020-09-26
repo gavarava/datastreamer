@@ -3,6 +3,8 @@ package io.datastreamer;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
+import io.datastreamer.adapters.database.PostgresOrderRepository;
+import io.datastreamer.core.model.Order;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;

@@ -1,9 +1,11 @@
-package io.datastreamer;
+package io.datastreamer.adapters.database;
 
 import static java.time.Instant.ofEpochMilli;
 import static java.time.OffsetDateTime.ofInstant;
 import static java.time.ZoneOffset.UTC;
 
+import io.datastreamer.core.model.Order;
+import io.datastreamer.ports.OrderRepository;
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;

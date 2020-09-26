@@ -1,8 +1,9 @@
-package io.datastreamer;
+package io.datastreamer.adapters.database;
 
 
 import static org.hibernate.jpa.QueryHints.HINT_FETCH_SIZE;
 
+import io.datastreamer.ports.StreamableJpaSpecificationRepository;
 import java.util.stream.Stream;
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;

@@ -3,6 +3,9 @@ package io.datastreamer;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
+import io.datastreamer.adapters.database.OrderEntity;
+import io.datastreamer.adapters.database.OrderSpecification;
+import io.datastreamer.adapters.database.PostgresBigOrderRepository;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;

@@ -1,4 +1,4 @@
-package io.datastreamer;
+package io.datastreamer.adapters.database;
 
 import java.math.BigDecimal;
 import org.springframework.data.jpa.domain.Specification;

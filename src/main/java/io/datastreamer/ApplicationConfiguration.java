@@ -1,5 +1,8 @@
 package io.datastreamer;
 
+import io.datastreamer.adapters.database.OrderEntity;
+import io.datastreamer.adapters.database.PostgresBigOrderRepository;
+import io.datastreamer.adapters.database.PostgresOrderRepository;
 import javax.persistence.EntityManager;
 import javax.sql.DataSource;
 import org.postgresql.Driver;

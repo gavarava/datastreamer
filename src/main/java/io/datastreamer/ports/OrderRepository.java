@@ -1,5 +1,6 @@
-package io.datastreamer;
+package io.datastreamer.ports;
 
+import io.datastreamer.core.model.Order;
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 import java.util.List;
