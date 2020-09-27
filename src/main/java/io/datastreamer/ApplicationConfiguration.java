@@ -2,7 +2,6 @@ package io.datastreamer;
 
 import io.datastreamer.adapters.database.OrderEntity;
 import io.datastreamer.adapters.database.PostgresBigOrderRepository;
-import io.datastreamer.adapters.database.PostgresOrderRepository;
 import javax.persistence.EntityManager;
 import javax.sql.DataSource;
 import org.postgresql.Driver;
@@ -15,7 +14,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.datasource.SimpleDriverDataSource;
 
 @Configuration
-@EnableJpaRepositories
+@EnableJpaRepositories(basePackages = { "io.datastreamer.adapters"})
 class ApplicationConfiguration {
 
   @Bean
@@ -35,12 +34,8 @@ class ApplicationConfiguration {
   }
 
   @Bean
-  PostgresOrderRepository postgreOrderRepository() {
-    return new PostgresOrderRepository(dataSource());
-  }
-
-  @Bean
   PostgresBigOrderRepository postgresBigOrderRepository(@Autowired EntityManager entityManager) {
     return new PostgresBigOrderRepository(OrderEntity.class, entityManager);
   }
+
 }
