@@ -19,7 +19,7 @@ class OrderCountsStreamingServiceIT {
   @Test
   void testOrderStreamingService() {
     long result = orderCountsStreamingService.getOrdersUnder(BigDecimal.valueOf(500));
-    assertThat(result, is(0));
+    assertThat(result, is(499843L));
   }
 
 

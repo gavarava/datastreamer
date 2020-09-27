@@ -1,20 +1,18 @@
 package io.datastreamer.core.services;
 
 import io.datastreamer.adapters.database.OrderSpecification;
-import io.datastreamer.adapters.database.PostgresBigOrderRepository;
+import io.datastreamer.ports.BigOrderRepository;
 import java.math.BigDecimal;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-@Qualifier(value = "postgresBigOrderRepository")
 @Service
 public class OrderCountsStreamingService {
 
-  private final PostgresBigOrderRepository repository;
+  private final BigOrderRepository repository;
 
   @Autowired
-  public OrderCountsStreamingService(PostgresBigOrderRepository repository) {
+    public OrderCountsStreamingService(BigOrderRepository repository) {
     this.repository = repository;
   }
 
