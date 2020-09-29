@@ -13,7 +13,7 @@ CREATE TABLE public.order
     CONSTRAINT order_pkey PRIMARY KEY (id)
 );
 
-/* Generate 1 Million Rows */
+/* Generate 10 Million Rows */
 insert into public.order (creationDate, customerName, orderTotal, membershipLevel)
 select current_timestamp,
        md5(random()::text),
