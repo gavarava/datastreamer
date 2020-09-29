@@ -17,9 +17,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
+@ActiveProfiles(profiles = "test")
 @SpringBootTest
 class PostgresBigOrderRepositoryIT {
 
@@ -36,7 +38,7 @@ class PostgresBigOrderRepositoryIT {
         .stream(orderSpecification, OrderEntity.class)
         .collect(Collectors.toList());
     System.out.println("Total Elements = " + result.size());
-    assertThat(result.size(), is(399260));
+    assertThat(result.size(), is(3996721));
 
     double batchOrderTotal = result.stream()
         .mapToDouble(value -> value.getOrdertotal().doubleValue()).sum();
@@ -53,7 +55,7 @@ class PostgresBigOrderRepositoryIT {
         .findAll(orderSpecification, paging);
 
     System.out.println("Total Elements = " + orderEntities.getTotalElements());
-    assertThat(orderEntities.getTotalElements(), is(399260L));
+    assertThat(orderEntities.getTotalElements(), is(3996721L));
 
     System.out.println("Total Pages = " + orderEntities.getTotalPages());
     System.out.println("Number = " + orderEntities.getNumber());
