@@ -1,6 +1,12 @@
 package io.datastreamer;
 
-import io.datastreamer.adapters.kafka.OrderTotalsProducer;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.databind.node.JsonNodeFactory;
+import io.datastreamer.adapters.kafka.OrderAnalyticsProducer;
 import java.util.HashMap;
 import java.util.Map;
 import org.apache.kafka.clients.producer.ProducerConfig;
@@ -36,7 +42,17 @@ public class KafkaProducerConfig {
   }
 
   @Bean
-  public OrderTotalsProducer orderTotalsProducer() {
-    return new OrderTotalsProducer(producerConfigs());
+  public OrderAnalyticsProducer orderTotalsProducer() {
+    return new OrderAnalyticsProducer(producerConfigs());
+  }
+
+  @Bean
+  public static ObjectMapper objectMapper() {
+    return new ObjectMapper()
+        .enable(DeserializationFeature.USE_BIG_DECIMAL_FOR_FLOATS)
+        .setNodeFactory(JsonNodeFactory.withExactBigDecimals(true))
+        .configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false)
+        .setPropertyNamingStrategy(PropertyNamingStrategy.SNAKE_CASE)
+        .setSerializationInclusion(Include.NON_NULL);
   }
 }
