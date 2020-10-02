@@ -2,7 +2,7 @@ package io.datastreamer.adapters.kafka;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.datastreamer.core.model.OrderCountsAboveThreshold;
+import io.datastreamer.core.model.OrderStatistics;
 import io.datastreamer.core.services.OrderCountsStreamingService;
 import java.math.BigDecimal;
 import java.util.Map;
@@ -15,8 +15,9 @@ import org.springframework.kafka.core.KafkaTemplate;
 
 @Profile(value = "default")
 @Slf4j
-public class OrderAnalyticsProducer extends KafkaProducer<String, String> {
+public class OrderStatisticsProducer extends KafkaProducer<String, String> {
 
+  private static final String ORDER_STATS = "order-stats";
   @Autowired
   private KafkaTemplate<String, String> kafkaTemplate;
 
@@ -26,28 +27,29 @@ public class OrderAnalyticsProducer extends KafkaProducer<String, String> {
   @Autowired
   private ObjectMapper objectMapper;
 
-  public OrderAnalyticsProducer(Map configs) {
+  public OrderStatisticsProducer(Map configs) {
     super(configs);
   }
 
   @PostConstruct
-  public void sendOrderMessage() throws JsonProcessingException {
-    log.info("Running sendOrderMessage");
+  public void publishOrderStatisticsMessage() throws JsonProcessingException {
+    log.debug("Running publishOrderStatisticsMessage");
 
     int threshold = 5;
     long orderCounts = Long.MAX_VALUE;
 
     while (orderCounts != 0) {
-
-      OrderCountsAboveThreshold orderCountsAboveThreshold = orderCountsStreamingService
-          .getOrdersOver(BigDecimal.valueOf(threshold));
-
       threshold += 5;
 
-      String topicName = "order-totals";
-      String orderMessage = objectMapper.writeValueAsString(orderCountsAboveThreshold);
-      log.info("Sending ---> orderMessage = {}", orderMessage);
-      kafkaTemplate.send(topicName, orderMessage);
+      OrderStatistics orderStatistics = OrderStatistics.builder()
+          .orderCountsAboveThreshold(orderCountsStreamingService
+              .getOrdersOver(BigDecimal.valueOf(threshold)))
+          .orderCountsUnderThreshold(orderCountsStreamingService
+              .getOrdersUnder(BigDecimal.valueOf(threshold)))
+          .build();
+      String orderStatsMessage = objectMapper.writeValueAsString(orderStatistics);
+      log.debug("publishing => orderStatsMessage = {}", orderStatsMessage);
+      kafkaTemplate.send(ORDER_STATS, orderStatsMessage);
     }
   }
 }

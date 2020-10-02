@@ -5,6 +5,8 @@ import lombok.Value;
 
 @Builder
 @Value
-public class AnalyticsData {
+public class OrderStatistics {
+
   private OrderCountsUnderThreshold orderCountsUnderThreshold;
+  private OrderCountsAboveThreshold orderCountsAboveThreshold;
 }

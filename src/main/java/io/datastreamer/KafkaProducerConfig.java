@@ -6,7 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
-import io.datastreamer.adapters.kafka.OrderAnalyticsProducer;
+import io.datastreamer.adapters.kafka.OrderStatisticsProducer;
 import java.util.HashMap;
 import java.util.Map;
 import org.apache.kafka.clients.producer.ProducerConfig;
@@ -44,8 +44,8 @@ public class KafkaProducerConfig {
   }
 
   @Bean
-  public OrderAnalyticsProducer orderTotalsProducer() {
-    return new OrderAnalyticsProducer(producerConfigs());
+  public OrderStatisticsProducer orderStatisticsProducer() {
+    return new OrderStatisticsProducer(producerConfigs());
   }
 
   @Bean

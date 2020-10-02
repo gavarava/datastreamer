@@ -9,9 +9,9 @@ You can find the documentation and instructions to Run Kafka at [https://docs.co
 docker-compose up -d
 ```
 
-#### Create a Kafka Topic called order-totals
+#### Create a Kafka Topic called order-stats
 ```
-kafka-topics --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic order-totals
+kafka-topics --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic order-stats
 ```
 
 #### List Kafka Topics
@@ -21,5 +21,5 @@ kafka-topics --list --zookeeper localhost:2181
 
 #### Tail Contents of Kafka Topic
 ```
-kafka-console-consumer --bootstrap-server localhost:9092 --topic order-totals --from-beginning
+kafka-console-consumer --bootstrap-server localhost:9092 --topic order-stats --from-beginning
 ```
