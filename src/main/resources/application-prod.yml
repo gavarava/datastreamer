@@ -1,0 +1,22 @@
+server:
+  port: 8080
+
+management:
+  server:
+    port: 9080
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure.include: "health, info"
+      base-path: "/metrics"
+
+spring:
+  application:
+    name: datastreamer
+
+  datasource:
+    url: ${POSTGRES_URL:jdbc:postgresql://localhost:5432/postgres}
+    username: ${POSTGRES_USER:postgres}
+    password: ${POSTGRES_PWD:password}

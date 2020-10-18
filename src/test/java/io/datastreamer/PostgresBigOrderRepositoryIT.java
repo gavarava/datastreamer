@@ -10,6 +10,7 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -20,6 +21,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
+@Disabled(value = "Long Running test for experimentation")
 @Slf4j
 @ActiveProfiles(profiles = "test")
 @SpringBootTest
@@ -38,7 +40,7 @@ class PostgresBigOrderRepositoryIT {
         .stream(orderSpecification, OrderEntity.class)
         .collect(Collectors.toList());
     System.out.println("Total Elements = " + result.size());
-    assertThat(result.size(), is(3996721));
+    assertThat(result.size(), is(3995434));
 
     double batchOrderTotal = result.stream()
         .mapToDouble(value -> value.getOrdertotal().doubleValue()).sum();
@@ -55,7 +57,7 @@ class PostgresBigOrderRepositoryIT {
         .findAll(orderSpecification, paging);
 
     System.out.println("Total Elements = " + orderEntities.getTotalElements());
-    assertThat(orderEntities.getTotalElements(), is(3996721L));
+    assertThat(orderEntities.getTotalElements(), is(3995434L));
 
     System.out.println("Total Pages = " + orderEntities.getTotalPages());
     System.out.println("Number = " + orderEntities.getNumber());
@@ -63,8 +65,6 @@ class PostgresBigOrderRepositoryIT {
     double batchOrderTotal = orderEntities.stream()
         .mapToDouble(value -> value.getOrdertotal().doubleValue()).sum();
     System.out.println("Order totals of this batch = " + batchOrderTotal);
-
-
 
     for (int i = 1; i < orderEntities.getTotalPages(); i++) {
       orderEntities = postgresBigOrderRepository

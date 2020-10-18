@@ -13,7 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.kafka.core.KafkaTemplate;
 
-@Profile(value = "default")
+@Profile("prod")
 @Slf4j
 public class OrderStatisticsProducer extends KafkaProducer<String, String> {
 
@@ -36,9 +36,9 @@ public class OrderStatisticsProducer extends KafkaProducer<String, String> {
     log.debug("Running publishOrderStatisticsMessage");
 
     int threshold = 5;
-    long orderCounts = Long.MAX_VALUE;
+    long entriesCounter = Long.MAX_VALUE;
 
-    while (orderCounts != 0) {
+    while (entriesCounter != 0) {
       threshold += 5;
 
       OrderStatistics orderStatistics = OrderStatistics.builder()
@@ -47,9 +47,12 @@ public class OrderStatisticsProducer extends KafkaProducer<String, String> {
           .orderCountsUnderThreshold(orderCountsStreamingService
               .getOrdersUnder(BigDecimal.valueOf(threshold)))
           .build();
+
       String orderStatsMessage = objectMapper.writeValueAsString(orderStatistics);
-      log.debug("publishing => orderStatsMessage = {}", orderStatsMessage);
+      log.info("publishing => orderStatsMessage = {}", orderStatsMessage);
       kafkaTemplate.send(ORDER_STATS, orderStatsMessage);
+
+      entriesCounter--;
     }
   }
 }

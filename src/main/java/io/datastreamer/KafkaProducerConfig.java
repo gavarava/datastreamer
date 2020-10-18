@@ -17,7 +17,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.kafka.core.DefaultKafkaProducerFactory;
 import org.springframework.kafka.core.KafkaTemplate;
 
-@Profile("default")
+@Profile("prod")
 @Configuration
 public class KafkaProducerConfig {
 
