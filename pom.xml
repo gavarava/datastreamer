@@ -10,9 +10,9 @@
     <relativePath/>
   </parent>
   <groupId>io.datastreamer</groupId>
-  <artifactId>postgres-big-db</artifactId>
-  <version>0.0.2-SNAPSHOT</version>
-  <name>demo</name>
+  <artifactId>datastreamer</artifactId>
+  <version>0.0.3-SNAPSHOT</version>
+  <name>Datastreamer</name>
   <description>Big Data Stream Generator in Spring Boot</description>
   <properties>
     <java.version>11</java.version>
