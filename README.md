@@ -23,3 +23,16 @@ kafka-topics --list --zookeeper localhost:2181
 ```
 kafka-console-consumer --bootstrap-server localhost:9092 --topic order-stats --from-beginning
 ```
+#### Build the application
+```
+mvn clean package
+```
+#### Run using commandline
+```
+java -jar -Dspring.profiles.active=prod target/datastreamer-0.0.3.jar
+```
+#### Build Docker image and Run using docker
+```
+docker build . -t datastreamer
+docker run --net="host" datastreamer:latest
+```

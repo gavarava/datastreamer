@@ -22,6 +22,7 @@ class ApplicationConfiguration {
   public DataSource dataSource() {
     SimpleDriverDataSource driverDataSource = new SimpleDriverDataSource();
     driverDataSource.setDriver(new Driver());
+    driverDataSource.setDriverClass(org.postgresql.Driver.class);
     driverDataSource
         .setUrl("jdbc:postgresql://localhost:5432/postgres?user=postgres&password=password");
     driverDataSource.setUsername("postgres");
