@@ -12,12 +12,17 @@ import org.apache.kafka.clients.producer.KafkaProducer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.Scheduled;
 
 @Profile("prod")
 @Slf4j
 public class OrderStatisticsProducer extends KafkaProducer<String, String> {
 
   private static final String ORDER_STATS = "order-stats";
+  private long entriesCounter = Long.MAX_VALUE;
+  private int threshold = 5;
+
   @Autowired
   private KafkaTemplate<String, String> kafkaTemplate;
 
@@ -31,14 +36,13 @@ public class OrderStatisticsProducer extends KafkaProducer<String, String> {
     super(configs);
   }
 
+  @Async
   @PostConstruct
+  @Scheduled(fixedRate = 5000)
   public void publishOrderStatisticsMessage() throws JsonProcessingException {
     log.debug("Running publishOrderStatisticsMessage");
 
-    int threshold = 5;
-    long entriesCounter = Long.MAX_VALUE;
-
-    while (entriesCounter != 0) {
+    if (entriesCounter != 0) {
       threshold += 5;
 
       OrderStatistics orderStatistics = OrderStatistics.builder()
