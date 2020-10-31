@@ -7,6 +7,6 @@ services:
       - ./postgresql.conf:/etc/postgresql.conf
     environment:
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: password
+      POSTGRES_PASSWORD: password123
     ports:
       - '5432:5432'
