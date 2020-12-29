@@ -8,6 +8,6 @@ import lombok.Value;
 @Value
 public class OrderCountsAboveThreshold implements AnalyticsCriteria {
 
-  private BigDecimal threshold;
-  private BigDecimal orderCountAboveThreshold;
+  BigDecimal threshold;
+  BigDecimal orderCountAboveThreshold;
 }

@@ -7,6 +7,6 @@ import lombok.Value;
 @Value
 public class OrderStatistics {
 
-  private OrderCountsUnderThreshold orderCountsUnderThreshold;
-  private OrderCountsAboveThreshold orderCountsAboveThreshold;
+  OrderCountsUnderThreshold orderCountsUnderThreshold;
+  OrderCountsAboveThreshold orderCountsAboveThreshold;
 }
